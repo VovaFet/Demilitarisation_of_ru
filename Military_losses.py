@@ -6,6 +6,7 @@ import time
 # import json
 from user_agent import generate_user_agent
 import re
+import csv
 
 headers = {
     "User-Agent": generate_user_agent()
@@ -13,10 +14,11 @@ headers = {
 url = 'https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html'
 
 list_of_vechicles = ["All vechicle", "Tanks", "Armoured Fighting Vehicles", "Infantry Fighting Vehicles", "Armoured Personnel Carriers", "Mine-Resistant Ambush Protected",
-                    "Infantry Mobility Vehicles", "Command Posts And Communications Stations", "Engineering Vehicles And Equipment", "Heavy Mortars",  "Towed Artillery",
+                    "Infantry Mobility Vehicles", "Command Posts And Communications Stations", "Engineering Vehicles And Equipment", "Heavy Mortars", "Towed Artillery",
                     "Self-Propelled Artillery", "Multiple Rocket Launchers", "Anti-Aircraft Guns", "Self-Propelled Anti-Aircraft Guns", "Surface-To-Air Missile Systems",
-                    "Radars", "Jammers And Deception Systems ", "Aircraft", "Helicopters", "Unmanned Aerial Vehicles", "Naval Ships", "Logistics Trains", 
-                    "Trucks, Vehicles and Jeeps"]
+                    "Radars", "Jammers And Deception Systems", "Aircraft", "Helicopters", "Unmanned Aerial Vehicles", "Naval Ships", "Logistics Trains", "Trucks, Vehicles and Jeeps"]
+
+start_time = time.strftime("%H:%M:%S", time.localtime())
 
 def all_losses_amount():
     _ = []
@@ -36,22 +38,25 @@ def all_losses_amount():
     # for item in all_losses_list:
 def printer(all_losses_list):
     _ = []
-    try:
-        for item in all_losses_list[0:6]:
-            x = re.findall('\d+', item)
-            b = {
-                "All_losses":x[0],
-                "Destroyed":x[1],
-                "Damaged":x[2],
-                "Abandoned":x[3],
-                "Captured":x[4]}
-            _.append(b)
+
+    for item in all_losses_list:
+        x = re.findall('\d+', item)[0]
+        _.append(x)
+    # print(type(_))
+    finall = []
+    for i in range(0, len(all_losses_list)):
+        y = f" {list_of_vechicles[i]}", f" {_[i]}"
+        finall.append(y)
+    # print(finall)
+    return finall
         
-        for i in range(0, len(all_losses_list)):
-            y = {
-                f"{list_of_vechicles[i]}":_[i]
-            }
-            print(y)
+def csv_saver(finall):
+    with open('data.csv', 'a') as f:
+        write = csv.writer(f)
+        write.writerows(finall)
+
+        
+        
     # all_list.append([_])
     # for strings in _:
     #     all_list_losses.append([strings])
@@ -74,4 +79,5 @@ def printer(all_losses_list):
 
 if __name__ == "__main__":
     all_losses_list = all_losses_amount()
-    printer(all_losses_list)
+    finall = printer(all_losses_list)
+    csv_saver(finall)
