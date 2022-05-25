@@ -14,7 +14,7 @@ headers = {
 url = 'https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html'
 
 list_of_vechicles = ["All vechicle", "Tanks", "Armoured Fighting Vehicles", "Infantry Fighting Vehicles", "Armoured Personnel Carriers", "Mine-Resistant Ambush Protected",
-                    "Infantry Mobility Vehicles", "Command Posts And Communications Stations", "Engineering Vehicles And Equipment", "Heavy Mortars", "Towed Artillery",
+                    "Infantry Mobility Vehicles", "Command Posts And Communications Stations", "Engineering Vehicles And Equipment", "Self-Propelled Anti-Tank Missile Systems", "Heavy Mortars", "Towed Artillery",
                     "Self-Propelled Artillery", "Multiple Rocket Launchers", "Anti-Aircraft Guns", "Self-Propelled Anti-Aircraft Guns", "Surface-To-Air Missile Systems",
                     "Radars", "Jammers And Deception Systems", "Aircraft", "Helicopters", "Unmanned Aerial Vehicles", "Naval Ships", "Logistics Trains", "Trucks, Vehicles and Jeeps"]
 
@@ -42,11 +42,16 @@ def printer(all_losses_list):
     for item in all_losses_list:
         x = re.findall('\d+', item)[0]
         _.append(x)
-    # print(type(_))
-    finall = []
+    # print(_)
+    # print(len(list_of_vechicles))
+    # print(len(_))
+    start_time = time.strftime("%d.%m.%y" + " - " +"%H:%M:%S").split(" - ")
+    # print(start_time)
+    finall = [start_time]
     for i in range(0, len(all_losses_list)):
         y = f" {list_of_vechicles[i]}", f" {_[i]}"
         finall.append(y)
+    finall.append('\n')
     # print(finall)
     return finall
         
